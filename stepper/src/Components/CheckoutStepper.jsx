@@ -1,18 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addData } from "../store/slices/CustomerInfoSlice";
+import { goToNextStep } from "../store/slices/StepSlice";
 
 const CheckoutStepper = ({ stepsConfigs = [] }) => {
   // stepsConfigs is an empty array by default
 
-  const { userName, userLastName, userEmail, userMobile } = useSelector(
-    (state) => state.customer
-  );
   const dispatch = useDispatch();
 
-  const [currentStep, setCurrentStep] = useState(1);
-
-  const [isComplete, setIsComplete] = useState(false);
+  const { currentStep, isComplete, stepCount } = useSelector(
+    (state) => state.steps
+  );
 
   const [margins, setMargins] = useState({
     marginLeft: 0,
@@ -24,6 +22,7 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
     return <></>;
   }
 
+  console.log("Current step is ", currentStep);
   useEffect(() => {
     setMargins({
       marginLeft: stepRef.current[0].offsetWidth / 2,
@@ -32,19 +31,25 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
     // console.log(stepRef.current[0].offsetWidth);
   }, [stepRef]);
 
-  const handleNext = () => {
-    // setCurrentStep((prev) => prev + 1);
-    // console.log("yes", userName, userEmail);
+  // const handleNext = () => {
+  //   // setCurrentStep((prev) => prev + 1);
+  //   // console.log("yes", userName, userEmail);
+  //   // dispatch(
+  //   //   setCurrentStep((prev) => {
+  //   //     if (prev === stepsConfigs.length - 1) {
+  //   //       setIsComplete(true);
+  //   //       return prev;
+  //   //     } else {
+  //   //       return prev + 1;
+  //   //     }
+  //   //   })
+  //   // );
 
-    setCurrentStep((prev) => {
-      if (prev === stepsConfigs.length - 1) {
-        setIsComplete(true);
-        return prev;
-      } else {
-        return prev + 1;
-      }
-    });
-  };
+  //   // dispatch(goToNextStep({ stepsConfigs }));
+  //   if (stepCount < 3) {
+  //     dispatch(goToNextStep({ stepIndex: currentStep + 1 }));
+  //   }
+  // };
 
   const calculateProgressBarWidth = () => {
     return ((currentStep - 1) / (stepsConfigs.length - 1)) * 100;
@@ -90,7 +95,7 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
       <div className="active_component">
         <ActiveComponent />
       </div>
-      {!isComplete && (
+      {/* {!isComplete && (
         <div className="btn_container">
           <button
             className="btn"
@@ -100,7 +105,7 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
             {currentStep === stepsConfigs.length ? "Finish" : "Next"}
           </button>
         </div>
-      )}
+      )} */}
     </>
   );
 };
