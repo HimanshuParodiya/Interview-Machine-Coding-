@@ -1,7 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addData } from "../store/slices/CustomerInfoSlice";
 
 const CheckoutStepper = ({ stepsConfigs = [] }) => {
   // stepsConfigs is an empty array by default
+
+  const { userName, userLastName, userEmail, userMobile } = useSelector(
+    (state) => state.customer
+  );
+  const dispatch = useDispatch();
+
   const [currentStep, setCurrentStep] = useState(1);
 
   const [isComplete, setIsComplete] = useState(false);
@@ -26,8 +34,10 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
 
   const handleNext = () => {
     // setCurrentStep((prev) => prev + 1);
+    // console.log("yes", userName, userEmail);
+
     setCurrentStep((prev) => {
-      if (prev === stepsConfigs.length) {
+      if (prev === stepsConfigs.length - 1) {
         setIsComplete(true);
         return prev;
       } else {
@@ -82,7 +92,11 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
       </div>
       {!isComplete && (
         <div className="btn_container">
-          <button className="btn" onClick={handleNext}>
+          <button
+            className="btn"
+            onClick={handleNext}
+            disabled={userName == "" && userEmail == ""}
+          >
             {currentStep === stepsConfigs.length ? "Finish" : "Next"}
           </button>
         </div>
