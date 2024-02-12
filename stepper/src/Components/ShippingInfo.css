@@ -1,7 +1,4 @@
-.customer-info-container {
-    max-width: 400px;
-    margin: 0 auto;
-}
+/* Basic styling for the ShippingInfo component */
 
 .container {
     max-width: 400px;
@@ -12,13 +9,12 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-
-.form-title {
+.title {
     font-size: 24px;
     margin-bottom: 20px;
 }
 
-.user-form {
+.form {
     display: flex;
     flex-direction: column;
 }
@@ -27,30 +23,27 @@
     margin-bottom: 15px;
 }
 
-label {
-    font-size: 16px;
+.label {
+    font-weight: bold;
     margin-bottom: 5px;
 }
 
-input {
+.input {
     padding: 8px;
-    font-size: 14px;
     width: 100%;
-    box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .submit-btn {
-    background-color: #4caf50;
-    color: #fff;
     padding: 10px;
+    background-color: #007bff;
+    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
 }
 
 .submit-btn:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
 }

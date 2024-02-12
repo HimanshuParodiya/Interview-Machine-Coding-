@@ -8,9 +8,7 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
 
   const dispatch = useDispatch();
 
-  const { currentStep, isComplete, stepCount } = useSelector(
-    (state) => state.steps
-  );
+  const { currentStep, isComplete } = useSelector((state) => state.steps);
 
   const [margins, setMargins] = useState({
     marginLeft: 0,
@@ -22,7 +20,7 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
     return <></>;
   }
 
-  console.log("Current step is ", currentStep);
+  // console.log("Current step is ", currentStep);
   useEffect(() => {
     setMargins({
       marginLeft: stepRef.current[0].offsetWidth / 2,

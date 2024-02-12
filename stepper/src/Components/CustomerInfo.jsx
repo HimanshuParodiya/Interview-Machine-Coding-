@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./CustomerInfo.css"; // Import your CSS file
-import { addData } from "../store/slices/CustomerInfoSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { addData } from "../store/slices/CustomerInfoSlice";
 import { goToNextStep } from "../store/slices/StepSlice";
+import "./CustomerInfo.css"; // Import your CSS file
 
 const CustomerInfo = () => {
   const [formData, setFormData] = useState({
@@ -66,7 +66,7 @@ const CustomerInfo = () => {
     }
   };
   return (
-    <div className="customer-info-container">
+    <div className="customer-info-container container">
       <h1 className="form-title">Provide your contact details</h1>
       <form onSubmit={handleFormSubmit} className="user-form">
         <div className="form-group">

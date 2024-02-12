@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import CheckoutStepper from "./Components/CheckoutStepper";
 import CustomerInfo from "./Components/CustomerInfo";
+import ShippingInfo from "./Components/ShippingInfo";
 
 const CHECKOUT_STEPS = [
   {
@@ -10,7 +11,7 @@ const CHECKOUT_STEPS = [
   },
   {
     name: "Shipping Info",
-    Component: () => <div>Enter your shipping address</div>,
+    Component: () => <ShippingInfo />,
   },
   {
     name: "Payment",
