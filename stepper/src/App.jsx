@@ -1,11 +1,12 @@
 import React from "react";
 import "./App.css";
 import CheckoutStepper from "./Components/CheckoutStepper";
+import CustomerInfo from "./Components/CustomerInfo";
 
 const CHECKOUT_STEPS = [
   {
     name: "Customer Info",
-    Component: () => <div>Provide your contact details</div>,
+    Component: () => <CustomerInfo />,
   },
   {
     name: "Shipping Info",

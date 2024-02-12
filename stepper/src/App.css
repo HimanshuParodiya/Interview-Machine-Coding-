@@ -42,12 +42,7 @@ body {
   color: #fff;
 }
 
-.active_component {
-  text-align: center;
-  margin-top: 3rem;
-  font-size: 2em;
-  font-weight: 600;
-}
+
 
 .progressBar {
   position: absolute;
@@ -69,10 +64,15 @@ body {
 }
 
 .btn {
-  padding: 10px 30px;
-  border-radius: 5px;
-  outline: none;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
   border: none;
-  background-color: #007bff;
+  border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
+}
+
+.btn:hover {
+  background-color: #45a049;
 }
