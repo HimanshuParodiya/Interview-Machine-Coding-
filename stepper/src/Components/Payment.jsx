@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./Payment.css";
 import { Bounce, ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { addPaymentData } from "../store/slices/PaymentSlice";
+import { goToNextStep } from "../store/slices/StepSlice";
 
 const Payment = () => {
   const [price, setPrice] = useState(null);
   const [otpCode, setOtpCode] = useState(null);
+
+  const [formData, setFormData] = useState({
+    cardNumber: 0,
+    price: 0,
+    otpCode: null,
+  });
+  const { currentStep, isComplete, stepCount } = useSelector(
+    (state) => state.steps
+  );
+
+  const { cardNumber } = useSelector((state) => state.payment);
+  const dispatch = useDispatch();
   const generatePrice = () => {
     let generatedPrice = Math.floor(Math.random() * (500 - 100) + 100);
     setPrice(generatedPrice);
@@ -34,10 +49,26 @@ const Payment = () => {
     });
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: +value }));
+  };
+
   const handleSubmit = (e) => {
     // if (condition) {
     e.preventDefault();
     // }
+    dispatch(addPaymentData(formData));
+  };
+
+  const handleNext = () => {
+    if (cardNumber == 0) {
+      // alert("Please fill in all details");
+    } else {
+      if (stepCount < 3) {
+        dispatch(goToNextStep({ stepIndex: currentStep + 1 }));
+      }
+    }
   };
 
   //   console.log(otpCode);
@@ -65,6 +96,9 @@ const Payment = () => {
               name="cardNumber"
               className="input-field"
               placeholder="1234 5678 9012 3456"
+              maxLength={16}
+              onChange={handleChange}
+              required
             />
           </div>
 
@@ -76,6 +110,8 @@ const Payment = () => {
               name="expiryDate"
               className="input-field"
               placeholder="MM/YYYY"
+              maxLength={7}
+              required
             />
           </div>
 
@@ -87,6 +123,8 @@ const Payment = () => {
               name="cvv"
               className="input-field"
               placeholder="123"
+              maxLength={3}
+              required
             />
           </div>
 
@@ -98,6 +136,8 @@ const Payment = () => {
               name="price"
               className="input-field"
               placeholder="Enter amount"
+              onChange={handleChange}
+              required
             />
           </div>
 
@@ -111,15 +151,18 @@ const Payment = () => {
           <div className="form-group">
             <label htmlFor="otp">Enter OTP</label>
             <input
-              type="number"
+              type="text"
               id="otp"
-              name="otp"
-              inputMode="numeric"
+              name="otpCode"
               className="input-field"
               placeholder="Enter OTP"
+              onChange={handleChange}
+              pattern="[0-9]*"
+              maxLength={5}
+              required
             />
           </div>
-          <button type="submit" className="submit-btn">
+          <button type="submit" onClick={handleNext} className="submit-btn">
             Make Payment
           </button>
         </form>
