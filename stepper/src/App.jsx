@@ -3,6 +3,7 @@ import "./App.css";
 import CheckoutStepper from "./Components/CheckoutStepper";
 import CustomerInfo from "./Components/CustomerInfo";
 import ShippingInfo from "./Components/ShippingInfo";
+import Payment from "./Components/Payment";
 
 const CHECKOUT_STEPS = [
   {
@@ -15,7 +16,7 @@ const CHECKOUT_STEPS = [
   },
   {
     name: "Payment",
-    Component: () => <div>Complete Your Payment</div>,
+    Component: () => <Payment />,
   },
   {
     name: "Delivered",
