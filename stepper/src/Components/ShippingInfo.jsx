@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { addShippingData } from "../store/slices/ShippingInfoSlice";
 import { goToNextStep } from "../store/slices/StepSlice";
 import "./ShippingInfo.css"; // Import the CSS file
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ShippingInfo = () => {
   const [shippingFormData, setShippingFormData] = useState({
@@ -11,13 +13,24 @@ const ShippingInfo = () => {
     pin: undefined,
   });
   const dispatch = useDispatch();
-  const { address } = useSelector((state) => state.shipping);
+  const { address, formSubmit } = useSelector((state) => state.shipping);
   const { currentStep, isComplete, stepCount } = useSelector(
     (state) => state.steps
   );
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    toast.success("Shipping address received successfully! Thank you!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
     dispatch(addShippingData(shippingFormData));
   };
   const handleShippingInfoChange = (e) => {
@@ -36,6 +49,7 @@ const ShippingInfo = () => {
 
   return (
     <div className="container">
+      <ToastContainer />
       <h1 className="title">Enter your shipping address</h1>
       <form className="form" onSubmit={handleFormSubmit}>
         <div className="form-group">
@@ -81,7 +95,7 @@ const ShippingInfo = () => {
         </div>
 
         <button className="submit-btn" onClick={handleNext} type="submit">
-          Submit
+          {formSubmit ? "Next" : "Submit"}
         </button>
       </form>
     </div>

@@ -4,6 +4,8 @@ const initialState = {
     address: "",
     city: "",
     pin: undefined,
+    formSubmit: false
+
 }
 
 const shippingInfoSlice = createSlice({
@@ -14,7 +16,9 @@ const shippingInfoSlice = createSlice({
         addShippingData: (state, action) => {
             state.address = action.payload.address
             state.city = action.payload.city
-            state.pin = action.payload.pin
+            state.pin = action.payload?.pin
+            state.formSubmit = true
+
         }
 
     }

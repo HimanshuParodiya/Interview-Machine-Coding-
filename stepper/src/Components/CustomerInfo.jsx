@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addData } from "../store/slices/CustomerInfoSlice";
 import { goToNextStep } from "../store/slices/StepSlice";
+
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import "./CustomerInfo.css"; // Import your CSS file
 
 const CustomerInfo = () => {
@@ -10,8 +14,12 @@ const CustomerInfo = () => {
     userLastName: "",
     userEmail: "",
     userMobile: undefined,
+    formSubmit: false,
   });
-  const { userName, userEmail } = useSelector((state) => state.customer);
+  const { userName, userEmail, formSubmit } = useSelector(
+    (state) => state.customer
+  );
+  // console.log(formSubmit);
 
   const { currentStep, isComplete, stepCount } = useSelector(
     (state) => state.steps
@@ -30,6 +38,18 @@ const CustomerInfo = () => {
     e.preventDefault();
 
     // Dispatch the addData action with the form data
+    toast.success("Customer details received successfully! Thank you!", {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+
     dispatch(addData(formData));
   };
   const handleNext = () => {
@@ -67,6 +87,7 @@ const CustomerInfo = () => {
   };
   return (
     <div className="customer-info-container container">
+      <ToastContainer />
       <h1 className="form-title">Provide your contact details</h1>
       <form onSubmit={handleFormSubmit} className="user-form">
         <div className="form-group">
@@ -112,7 +133,7 @@ const CustomerInfo = () => {
           />
         </div>
         <button type="submit" onClick={handleNext} className="submit-btn">
-          Submit
+          {formSubmit ? "Next" : "Submit"}
         </button>
       </form>
     </div>

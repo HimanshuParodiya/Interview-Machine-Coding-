@@ -5,6 +5,7 @@ const initialState = {
     userLastName: "",
     userEmail: "",
     userMobile: undefined,
+    formSubmit: false
 }
 
 const CustomerInfoSlice = createSlice({
@@ -17,6 +18,7 @@ const CustomerInfoSlice = createSlice({
             state.userLastName = action.payload.userLastName;
             state.userEmail = action.payload.userEmail;
             state.userMobile = action.payload.userMobile;
+            state.formSubmit = true
         }
     }
 })
