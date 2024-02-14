@@ -4,12 +4,14 @@ import { Bounce, ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { addPaymentData } from "../store/slices/PaymentSlice";
 import { goToNextStep } from "../store/slices/StepSlice";
+import Confetti from "react-confetti";
 
 const Payment = () => {
   const [price, setPrice] = useState(null);
   const [otpCode, setOtpCode] = useState(null);
   const [otpCodeFiled, setOtpCodeFiled] = useState(null);
   const [dateFiled, setDateFiled] = useState("");
+  const [showCongrats, setShowCongrats] = useState(false);
   //   const [priceField, setPriceField] = useState(null);
   //   console.log( price);
   //   console.log(priceField);
@@ -50,7 +52,7 @@ const Payment = () => {
   const customId = "custom-id-not-render-more-than-one-tost";
   const tostConfig = {
     position: "top-right",
-    autoClose: 3000,
+    autoClose: 5000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -95,14 +97,23 @@ const Payment = () => {
     setFormData((prev) => ({ ...prev, [name]: +value }));
   };
 
+  //   let congrats = false;
+
   const handleSubmit = (e) => {
     // if (condition) {
     e.preventDefault();
     // }
 
     if (otpCode == otpCodeFiled) {
+      //   congrats = true;
+
       dispatch(addPaymentData(formData));
       toast.success(`We have collected your payment`, tostConfig);
+      setShowCongrats(true);
+
+      setTimeout(() => {
+        setShowCongrats(false);
+      }, 5000);
     }
   };
 
@@ -223,6 +234,12 @@ const Payment = () => {
           <button type="submit" onClick={handleNext} className="submit-btn">
             {formSubmit ? "Next" : "Make Payment"}
           </button>
+          {showCongrats && (
+            <Confetti
+              width={window.innerWidth || 300}
+              height={window.innerHeight || 300}
+            />
+          )}
         </form>
       </div>
     </>
@@ -230,5 +247,3 @@ const Payment = () => {
 };
 
 export default Payment;
-
-// ab sahi h bus make payment ke baad next nai aa rha kul bolu toh form submit true nahi ho rha h
