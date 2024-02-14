@@ -8,17 +8,17 @@ import { goToNextStep } from "../store/slices/StepSlice";
 const Payment = () => {
   const [price, setPrice] = useState(null);
   const [otpCode, setOtpCode] = useState(null);
+  const [otpCodeFiled, setOtpCodeFiled] = useState(null);
 
   const [formData, setFormData] = useState({
     cardNumber: 0,
     price: 0,
-    otpCode: null,
   });
   const { currentStep, isComplete, stepCount } = useSelector(
     (state) => state.steps
   );
 
-  const { cardNumber } = useSelector((state) => state.payment);
+  const { cardNumber, formSubmit } = useSelector((state) => state.payment);
   const dispatch = useDispatch();
   const generatePrice = () => {
     let generatedPrice = Math.floor(Math.random() * (500 - 100) + 100);
@@ -32,6 +32,11 @@ const Payment = () => {
       otp += eachNumber;
     }
     setOtpCode(otp);
+  };
+
+  const handleOtpChange = (e) => {
+    e.preventDefault();
+    setOtpCodeFiled(e.target.value);
   };
   const customId = "custom-id-not-render-more-than-one-tost";
   const generateTostForOTP = () => {
@@ -62,15 +67,19 @@ const Payment = () => {
   };
 
   const handleNext = () => {
-    if (cardNumber == 0) {
-      // alert("Please fill in all details");
+    if (otpCode !== otpCodeFiled) {
+      alert("not Match");
     } else {
-      if (stepCount < 3) {
-        dispatch(goToNextStep({ stepIndex: currentStep + 1 }));
+      if (cardNumber == 0) {
+        // alert("Please fill in all details");
+      } else {
+        if (stepCount < 3) {
+          dispatch(goToNextStep({ stepIndex: currentStep + 1 }));
+        }
       }
     }
   };
-
+  console.log(formSubmit);
   //   console.log(otpCode);
 
   useEffect(() => {
@@ -156,14 +165,15 @@ const Payment = () => {
               name="otpCode"
               className="input-field"
               placeholder="Enter OTP"
-              onChange={handleChange}
+              onChange={(handleChange, handleOtpChange)}
               pattern="[0-9]*"
               maxLength={5}
               required
+              value={otpCodeFiled === null ? "" : otpCodeFiled}
             />
           </div>
           <button type="submit" onClick={handleNext} className="submit-btn">
-            Make Payment
+            {formSubmit ? "Next" : "Make Payment"}
           </button>
         </form>
       </div>
@@ -172,3 +182,5 @@ const Payment = () => {
 };
 
 export default Payment;
+
+// ab sahi h bus make payment ke baad next nai aa rha kul bolu toh form submit true nahi ho rha h

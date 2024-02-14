@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     cardNumber: 0,
     price: 0,
-    otpCode: null,
+    formSubmit: false
 }
 
 const paymentSlice = createSlice({
@@ -13,11 +13,12 @@ const paymentSlice = createSlice({
         addPaymentData: (state, action) => {
             state.cardNumber = action.payload.cardNumber
             state.price = action.payload.price
-            state.otpCode = action.payload.otpCode
-        }
+            state.formSubmit = true
+        },
+
     }
 })
 
-export const { addPaymentData } = paymentSlice.actions
+export const { addPaymentData, setFormSubmit } = paymentSlice.actions
 
 export default paymentSlice.reducer
