@@ -123,7 +123,18 @@ const Payment = () => {
     // }
 
     if (otpCode !== otpCodeFiled) {
-      toast.error(`OTP does not match! `, tostConfig);
+      toast.error(`OTP does not match! `, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        toastId: customId,
+      });
     } else {
       if (cardNumber == 0) {
         // alert("Please fill in all details");

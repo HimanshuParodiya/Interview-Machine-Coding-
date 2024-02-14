@@ -98,16 +98,20 @@ const CustomerInfo = () => {
             onChange={handleInputChange}
             name="userName"
             id="userName"
+            placeholder="Himanshu"
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="userLastName">Last name</label>
+          <label className="lastName" htmlFor="userLastName">
+            Last name
+          </label>
           <input
             type="text"
             onChange={handleInputChange}
             name="userLastName"
             id="userLastName"
+            placeholder="Parodiya"
           />
         </div>
 
@@ -119,6 +123,7 @@ const CustomerInfo = () => {
             onChange={handleInputChange}
             name="userEmail"
             id="userEmail"
+            placeholder="name@gmail.com"
           />
         </div>
 
@@ -130,6 +135,8 @@ const CustomerInfo = () => {
             onChange={handleInputChange}
             name="mobileContact"
             id="mobileContact"
+            maxLength={10}
+            placeholder="1234567890"
           />
         </div>
         <button type="submit" onClick={handleNext} className="submit-btn">

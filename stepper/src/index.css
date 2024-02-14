@@ -1,0 +1,20 @@
+form label {
+    position: relative;
+    display: block;
+    width: fit-content;
+    padding-right: 10px;
+}
+
+label.lastName::after {
+    content: "";
+}
+
+form label::after {
+    content: "*";
+    position: absolute;
+    top: -1px;
+    right: 0;
+    color: red;
+    font-size: 17px;
+
+}

@@ -54,7 +54,7 @@ const ShippingInfo = () => {
       <form className="form" onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label className="label" htmlFor="shippingAddress">
-            Shipping Address:
+            Shipping Address
           </label>
           <input
             className="input"
@@ -63,12 +63,13 @@ const ShippingInfo = () => {
             type="text"
             name="address"
             id="shippingAddress"
+            placeholder="Address"
           />
         </div>
 
         <div className="form-group">
           <label className="label" htmlFor="city">
-            City:
+            City
           </label>
           <input
             className="input"
@@ -77,12 +78,13 @@ const ShippingInfo = () => {
             type="text"
             name="city"
             id="city"
+            placeholder="city"
           />
         </div>
 
         <div className="form-group">
           <label className="label" htmlFor="zipCode">
-            Zip Code:
+            Zip Code
           </label>
           <input
             className="input"
@@ -91,6 +93,8 @@ const ShippingInfo = () => {
             type="number"
             name="pin"
             id="zipCode"
+            maxLength={5}
+            placeholder="ZipCode"
           />
         </div>
 
