@@ -104,8 +104,21 @@ const Payment = () => {
     // if (condition) {
     e.preventDefault();
     // }
-
-    if (otpCode == otpCodeFiled) {
+    if (formData.cardNumber.length !== 19) {
+      toast.error(`Enter a valid card number`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        toastId: customId,
+      });
+    }
+    if (otpCode == otpCodeFiled && formData.cardNumber.length == 19) {
       //   congrats = true;
 
       dispatch(addPaymentData(formData));

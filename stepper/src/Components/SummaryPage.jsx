@@ -11,9 +11,10 @@
 
 // export default SummaryPage;
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./SummaryPage.css";
 import { useSelector } from "react-redux";
+import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const SummaryPage = () => {
   const { cardNumber, price } = useSelector((state) => state.payment);
@@ -40,9 +41,26 @@ const SummaryPage = () => {
   // Format the date as per your requirement
   //   const deliveryDate =;
   //   console.log();
+  const customId = "custom-id-not-render-more-than-one-tost";
+
+  useEffect(() => {
+    toast.success(`Congrats! We will deliver your product soon`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      toastId: customId,
+    });
+  }, []);
 
   return (
     <div className="container">
+      <ToastContainer />
       <div className="summary-field">
         <span className="summary-label">Payment Status:</span>
         <span style={{ color: "#28a745" }}>Received</span>
