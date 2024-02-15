@@ -4,6 +4,7 @@ import CheckoutStepper from "./Components/CheckoutStepper";
 import CustomerInfo from "./Components/CustomerInfo";
 import ShippingInfo from "./Components/ShippingInfo";
 import Payment from "./Components/Payment";
+import SummaryPage from "./Components/SummaryPage";
 
 const CHECKOUT_STEPS = [
   {
@@ -19,8 +20,8 @@ const CHECKOUT_STEPS = [
     Component: () => <Payment />,
   },
   {
-    name: "Delivered",
-    Component: () => <div>Confirm That Your order has been delivered</div>,
+    name: "Status",
+    Component: () => <SummaryPage />,
   },
 ];
 

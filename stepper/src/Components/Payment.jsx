@@ -66,6 +66,7 @@ const Payment = () => {
   const generateTostForOTP = () => {
     toast.success(`Your one time OTP is ${otpCode}`, tostConfig);
   };
+
   const handleCardChange = (e) => {
     const { name, value } = e.target;
 

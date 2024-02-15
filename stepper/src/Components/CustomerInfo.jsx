@@ -133,7 +133,7 @@ const CustomerInfo = () => {
             required
             type="number"
             onChange={handleInputChange}
-            name="mobileContact"
+            name="userMobile"
             id="mobileContact"
             maxLength={10}
             placeholder="1234567890"

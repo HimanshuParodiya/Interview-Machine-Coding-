@@ -1,0 +1,27 @@
+/* SummaryPage.css */
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.summary-field {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.summary-label {
+    font-weight: bold;
+}
+
+.product-delivery-date {
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Additional styling based on your design preferences */
