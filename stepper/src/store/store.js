@@ -4,6 +4,7 @@ import CustomerInfoSlice from './slices/CustomerInfoSlice';
 import stepSlice from './slices/StepSlice';
 import shippingInfoSlice from './slices/ShippingInfoSlice';
 import paymentSlice from './slices/PaymentSlice';
+import productSlice from './slices/ProductSlice';
 
 
 const store = configureStore({
@@ -11,7 +12,8 @@ const store = configureStore({
         customer: CustomerInfoSlice,
         steps: stepSlice,
         shipping: shippingInfoSlice,
-        payment: paymentSlice
+        payment: paymentSlice,
+        product: productSlice
     },
     // other configurations if needed
 });

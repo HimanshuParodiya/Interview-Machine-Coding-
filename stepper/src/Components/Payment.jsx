@@ -25,6 +25,8 @@ const Payment = () => {
   );
 
   const { cardNumber, formSubmit } = useSelector((state) => state.payment);
+  const { productName } = useSelector((state) => state.product);
+
   const dispatch = useDispatch();
   const generatePrice = () => {
     let generatedPrice = Math.floor(Math.random() * (500 - 100) + 100);
@@ -172,7 +174,8 @@ const Payment = () => {
     <>
       <ToastContainer />
       <div className="payment-price-container">
-        Payment of <span className="payment-price">{price}</span> USD
+        Payment of <span className="payment-price">{price}</span> USD for{" "}
+        {productName}
       </div>
       <div className="payment-container">
         <h1 className="payment-title">Payment Details</h1>

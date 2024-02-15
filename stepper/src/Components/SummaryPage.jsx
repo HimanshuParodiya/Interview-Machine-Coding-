@@ -22,6 +22,8 @@ const SummaryPage = () => {
     // You can use a more sophisticated method for generating reference IDs
     return `HP-${Math.random().toString(36).substr(2, 8).toUpperCase()}`;
   };
+  const { productName } = useSelector((state) => state.product);
+
   const hashedCardNumber = () => {
     const lastFourDigit = cardNumber.slice(15, 19);
     const stars = "************";
@@ -103,7 +105,7 @@ const SummaryPage = () => {
 
       <hr />
       <div className="product-delivery-date">
-        <span className="summary">"Product" Will deliver on </span>
+        <span className="summary">{productName} Will deliver on </span>
         <span>{deliveryDate.toLocaleDateString()}</span>
       </div>
     </div>
