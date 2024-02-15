@@ -17,12 +17,12 @@ import { useSelector } from "react-redux";
 import { Bounce, ToastContainer, toast } from "react-toastify";
 
 const SummaryPage = () => {
-  const { cardNumber, price } = useSelector((state) => state.payment);
+  const { cardNumber } = useSelector((state) => state.payment);
   const generateReferenceId = () => {
     // You can use a more sophisticated method for generating reference IDs
     return `HP-${Math.random().toString(36).substr(2, 8).toUpperCase()}`;
   };
-  const { productName } = useSelector((state) => state.product);
+  const { productName, productPrice } = useSelector((state) => state.product);
 
   const hashedCardNumber = () => {
     const lastFourDigit = cardNumber.slice(15, 19);
@@ -32,7 +32,7 @@ const SummaryPage = () => {
 
   const [referenceId] = useState(generateReferenceId());
   const [hashedCard] = useState(hashedCardNumber());
-  const { userName, userEmail, userMobile, formSubmit } = useSelector(
+  const { userName, userEmail, userMobile } = useSelector(
     (state) => state.customer
   );
 
@@ -78,7 +78,7 @@ const SummaryPage = () => {
       </div>
       <div className="summary-field">
         <span className="summary-label">Payment Amount:</span>
-        <span>{price} USD</span>
+        <span>{productPrice} USD</span>
       </div>
 
       <div className="summary-field">
@@ -105,7 +105,7 @@ const SummaryPage = () => {
 
       <hr />
       <div className="product-delivery-date">
-        <span className="summary">{productName} Will deliver on </span>
+        <span className="summary">{productName} be delivered on </span>
         <span>{deliveryDate.toLocaleDateString()}</span>
       </div>
     </div>

@@ -7,31 +7,30 @@ import { goToNextStep } from "../store/slices/StepSlice";
 import Confetti from "react-confetti";
 
 const Payment = () => {
-  const [price, setPrice] = useState(null);
   const [otpCode, setOtpCode] = useState(null);
   const [otpCodeFiled, setOtpCodeFiled] = useState(null);
   const [dateFiled, setDateFiled] = useState("");
   const [showCongrats, setShowCongrats] = useState(false);
-  //   const [priceField, setPriceField] = useState(null);
+  const [priceField, setPriceField] = useState(0);
   //   console.log( price);
   //   console.log(priceField);
 
   const [formData, setFormData] = useState({
     cardNumber: "",
-    price,
+    // price,
   });
   const { currentStep, isComplete, stepCount } = useSelector(
     (state) => state.steps
   );
 
   const { cardNumber, formSubmit } = useSelector((state) => state.payment);
-  const { productName } = useSelector((state) => state.product);
+  const { productName, productPrice } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
-  const generatePrice = () => {
-    let generatedPrice = Math.floor(Math.random() * (500 - 100) + 100);
-    setPrice(generatedPrice);
-  };
+  // const generatePrice = () => {
+  //   let generatedPrice = Math.floor(Math.random() * (500 - 100) + 100);
+  //   setPrice(generatedPrice);
+  // };
 
   const generateOTP = () => {
     let otp = "";
@@ -47,10 +46,10 @@ const Payment = () => {
     setOtpCodeFiled(e.target.value);
   };
 
-  //   const handlePriceChange = (e) => {
-  //     e.preventDefault();
-  //     setPriceField(e.target.value);
-  //   };
+  const handlePriceChange = (e) => {
+    e.preventDefault();
+    setPriceField(e.target.value);
+  };
   const customId = "custom-id-not-render-more-than-one-tost";
   const tostConfig = {
     position: "top-right",
@@ -120,7 +119,11 @@ const Payment = () => {
         toastId: customId,
       });
     }
-    if (otpCode == otpCodeFiled && formData.cardNumber.length == 19) {
+    if (
+      otpCode == otpCodeFiled &&
+      formData.cardNumber.length == 19 &&
+      productPrice == +priceField
+    ) {
       //   congrats = true;
 
       dispatch(addPaymentData(formData));
@@ -134,9 +137,9 @@ const Payment = () => {
   };
 
   const handleNext = () => {
-    // if (price !== +priceField) {
-    //   toast.error(`Amount does not match `, tostConfig);
-    // }
+    if (productPrice !== +priceField) {
+      toast.error(`Amount does not match `, tostConfig);
+    }
 
     if (otpCode !== otpCodeFiled) {
       toast.error(`OTP does not match! `, {
@@ -166,7 +169,6 @@ const Payment = () => {
 
   useEffect(() => {
     generateOTP();
-    generatePrice();
   }, []);
 
   //   useEffect(() => {}, []);
@@ -174,7 +176,7 @@ const Payment = () => {
     <>
       <ToastContainer />
       <div className="payment-price-container">
-        Payment of <span className="payment-price">{price}</span> USD for{" "}
+        Payment of <span className="payment-price">{productPrice}</span> USD for{" "}
         {productName}
       </div>
       <div className="payment-container">
@@ -231,8 +233,8 @@ const Payment = () => {
               name="price"
               className="input-field"
               placeholder="Enter amount"
-              onChange={handleChange}
-              //   onChange={(handleChange, handlePriceChange)}
+              // onChange={handleChange}
+              onChange={(handleChange, handlePriceChange)}
               required
             />
           </div>

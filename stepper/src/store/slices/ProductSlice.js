@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     productName: "",
+    productPrice: 0,
     isLoading: false,
     isError: false
 }
@@ -23,6 +24,7 @@ const productSlice = createSlice({
         builder.addCase(fetchProductName.fulfilled, (state, action) => {
             state.isLoading = false
             state.productName = action.payload.title
+            state.productPrice = action.payload.price
         })
         builder.addCase(fetchProductName.rejected, (state, action) => {
             state.isError = true
