@@ -35,14 +35,11 @@ const App = () => {
   const dispatch = useDispatch();
   const [productId] = useState(getRandomProductId());
   const { currentStep } = useSelector((state) => state.steps);
-  const { productName } = useSelector((state) => state.product);
   const handleGoBack = () => {
     if (currentStep != 1) {
       dispatch(goToBackStep());
     }
   };
-
-  // console.log(productName);
 
   useEffect(() => {
     dispatch(fetchProductName(productId));
