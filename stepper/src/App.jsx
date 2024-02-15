@@ -42,7 +42,7 @@ const App = () => {
     }
   };
 
-  console.log(productName);
+  // console.log(productName);
 
   useEffect(() => {
     dispatch(fetchProductName(productId));
