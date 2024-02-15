@@ -62,11 +62,13 @@ const CheckoutStepper = ({ stepsConfigs = [] }) => {
             key={step.name}
             ref={(el) => (stepRef.current[index] = el)}
             className={`step ${
-              currentStep > index + 1 || isComplete ? "complete" : ""
+              currentStep > index + 1 || currentStep == 4 || isComplete
+                ? "complete"
+                : ""
             } ${currentStep === index + 1 ? "active" : ""}`}
           >
             <div className="step_number">
-              {currentStep > index + 1 || isComplete ? (
+              {currentStep > index + 1 || currentStep == 4 || isComplete ? (
                 <span>&#10003;</span>
               ) : (
                 index + 1
