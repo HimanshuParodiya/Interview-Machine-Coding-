@@ -1,35 +1,100 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Pill from "./components/Pill";
+import Card from "./components/Card";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedUser, setSelectedUser] = useState([]);
+  const [selectedUserSet, setSelectedUserSet] = useState(new Set());
+
+  // console.log(suggestions);
+  const fetchUser = async () => {
+    if (searchTerm === "") {
+      setSuggestions([]);
+      return;
+    }
+
+    const response = await fetch(
+      `https://dummyjson.com/users/search?q=${searchTerm}&limit=100`
+    );
+    const data = await response.json();
+    setSuggestions(data);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [searchTerm]);
+
+  const handleSelectUser = (user) => {
+    setSelectedUser((prev) => [...prev, user]);
+    setSelectedUserSet(new Set([...selectedUserSet, user.email]));
+    setSearchTerm("");
+    setSuggestions([]);
+  };
+  const handleRemoveUser = (user) => {
+    let notClickedUser = selectedUser.filter(
+      (item) => item.email !== user.email
+    );
+    setSelectedUser(notClickedUser);
+    // after removing the user form search bar add it back to suggestions
+
+    const removedUser = new Set(selectedUserSet);
+    removedUser.delete(user.email);
+    setSelectedUserSet(removedUser);
+  };
+  // console.log("Selected user is ", selectedUser);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      <div className="user-search-container">
+        <div className="user-search-input">
+          {/* Pills  */}
+          {selectedUser.map((user) => {
+            return (
+              <Pill
+                key={user.email}
+                image={user.image}
+                text={`${user.firstName} ${user.lastName}`}
+                onClick={() => handleRemoveUser(user)}
+              />
+            );
+          })}
 
-export default App
+          {/* input field with search suggestion  */}
+          <div>
+            <input
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              type="text"
+              placeholder="Search for a user"
+            />
+            {/* Search Suggestion */}
+            <ul className="suggestions-list">
+              {suggestions?.users?.map((user) => {
+                return !selectedUserSet.has(user?.email) ? (
+                  <li key={user.email} onClick={() => handleSelectUser(user)}>
+                    <img
+                      src={user.image}
+                      alt={`${user.firstName} ${user.lastName}`}
+                    />
+
+                    <span>
+                      {user.firstName} {user.lastName}
+                    </span>
+                  </li>
+                ) : (
+                  <React.Fragment key={user.email}></React.Fragment>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <Card />
+    </>
+  );
+};
+
+export default App;
