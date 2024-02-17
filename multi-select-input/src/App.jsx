@@ -8,6 +8,11 @@ const App = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedUser, setSelectedUser] = useState([]);
   const [selectedUserSet, setSelectedUserSet] = useState(new Set());
+  const [allUsers, setAllUsers] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(20);
+  const [page, setPage] = useState(10);
 
   // console.log(suggestions);
   const fetchUser = async () => {
@@ -23,9 +28,51 @@ const App = () => {
     setSuggestions(data);
   };
 
+  const fetchAllUser = async () => {
+    if (skip <= total) {
+      const response = await fetch(
+        `https://dummyjson.com/users?limit=${limit}&skip=${skip}`
+      );
+      console.log("Api calling");
+      const responseData = await response.json();
+      setAllUsers((prev) => [...prev, ...responseData.users]);
+      setTotal(responseData.total);
+      setSkip(responseData.skip + limit);
+    }
+  };
+
+  console.log("All users", allUsers);
+  console.log("Total", total);
+  console.log("skip", skip);
+  console.log("limit", limit);
+  console.log("page", page);
+
+  // Function to handle scroll events
+  const handleScroll = () => {
+    // Check if the user has scrolled to the bottom of the page
+    if (skip <= total) {
+      if (
+        window.innerHeight + document.documentElement.scrollTop ===
+        document.documentElement.offsetHeight
+      ) {
+        // Increment the page number to fetch more data
+        setPage((prevPage) => prevPage + 1);
+      }
+    }
+  };
   useEffect(() => {
     fetchUser();
   }, [searchTerm]);
+  useEffect(() => {
+    fetchAllUser();
+  }, [page]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      // Remove the event listener when the component unmounts
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const handleSelectUser = (user) => {
     setSelectedUser((prev) => [...prev, user]);
@@ -92,7 +139,20 @@ const App = () => {
           </div>
         </div>
       </div>
-      <Card />
+      <div className="cards-container">
+        {allUsers?.map((user) => {
+          return (
+            <Card
+              key={user.email}
+              id={user.id}
+              name={user.firstName}
+              age={user.age}
+              gender={user.gender}
+              image={user.image}
+            />
+          );
+        })}
+      </div>
     </>
   );
 };

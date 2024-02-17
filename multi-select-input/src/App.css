@@ -81,3 +81,46 @@ body {
 .suggestions-list li.active {
   background-color: #ccc;
 }
+
+/*App  Card  */
+.cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/*card  Card  */
+.card-container {
+  width: 300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+}
+
+
+
+.image-section {
+  margin: 0 auto;
+  margin-bottom: 10px;
+  height: 150px;
+  width: 150px;
+}
+
+.image-section img {
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+
+}
+
+.text span {
+  margin-left: 13px;
+}
